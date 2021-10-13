@@ -1,0 +1,17 @@
+IDE Requiement:
+
+Netbeans 8.2
+
+Database Requiement:
+
+Microsoft sql server management System 2014 Edition
+
+
+Add jar:
+itextpdf-5.5.9 
+
+
+How to run:
+
+After installing both the above softwares, First of all a database name "ProjectDB" must be created. You must copy all the sql commands from the given sql text file and paste them under
+that database. Then extract all codes from zip folder and open it in netbeans.Add the jar given jar folder in the netbeans.

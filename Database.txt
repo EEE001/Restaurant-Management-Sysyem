@@ -1,0 +1,114 @@
+Create Database ProjectDB;
+Use ProjectDB;
+
+
+CREATE TABLE CUSTOMER
+(
+CustomerId int  PRIMARY KEY,
+Customer_Name varchar(50) NOT NULL,
+CONSTRAINT Customer_Name CHECK (Customer_Name  not like '%[^A-Z ]%'  ),
+Customer_Address varchar(200) NOT NULL  ,
+Customer_Phone CHAR(11) NOT NULL UNIQUE, 
+CONSTRAINT chk_phone CHECK (Customer_Phone not like '%[^0-9]%') ,
+)
+
+drop table CUSTOMER
+
+SELECT * FROM CUSTOMER
+
+
+
+CREATE TABLE ITEM
+(
+Item_Id  int  PRIMARY KEY,
+Item_Description varchar(50)NOT NULL,
+Price float NOT NULL,
+)
+drop table ITEM
+
+
+SELECT * FROM CUSTOMER
+SELECT * FROM ITEM
+SELECT * FROM ORDERS
+
+
+CREATE TABLE MANAGER
+(
+
+ManagerId int IDENTITY(1,1) PRIMARY KEY,
+Manager_Name varchar(50) NOT NULL,
+CONSTRAINT Manager_Name CHECK (Manager_Name  not like '%[^A-Z ]%'  ),
+Manager_Address varchar(200) NOT NULL ,
+Manager_Phone varchar(11)NOT NULL UNIQUE
+CONSTRAINT chk_mngphone CHECK (Manager_Phone not like '%[^0-9]%') ,
+Manager_Password varchar(11)NOT NULL
+)
+
+DROP TABLE MANAGER
+
+
+SELECT * FROM MANAGER	  
+	   
+
+CREATE TABLE ORDERS
+(
+Order_No int  PRIMARY KEY,
+Item_Quantity int NOT NULL,
+Item_Id int  FOREIGN KEY REFERENCES ITEM(Item_Id),
+ManagerId int  FOREIGN KEY REFERENCES MANAGER(ManagerId),
+CustomerId int  FOREIGN KEY REFERENCES CUSTOMER(CustomerId),
+)
+drop table ORDERS
+
+
+
+SELECT * FROM ORDERS
+
+
+
+SELECT * FROM CUSTOMER
+SELECT * FROM ITEM
+SELECT * FROM ORDERS
+
+--Select  Item_Description,count( Item_Id)as 'count',sum(price) as 'price' from  (select ORDERS.Order_No,ORDERS.Item_Quantity,ORDERS.Item_Id,ORDERS.CustomerId,Item_Description,ITEM.Price from ORDERS
+--join item on ORDERS.Item_Id=ITEM.Item_Id) as x group by  (x.Item_Description) 
+
+--select ITEM.Item_Id,ITEM.Item_Description,ITEM.Price,ORDERS.Item_Quantity from CUSTOMER inner join ORDERS on CUSTOMER.CustomerId = ORDERS.CustomerId
+--inner join ITEM on  ORDERS.Item_Id = ITEM.Item_Id;
+	   
+CREATE TABLE BILL
+(
+Bill_No int IDENTITY(1,1) PRIMARY KEY,
+CustomerId int  FOREIGN KEY REFERENCES CUSTOMER(CustomerId),
+ManagerId int  FOREIGN KEY REFERENCES MANAGER(ManagerId),
+Total_price float NOT NULL,
+)
+drop table BILL
+
+
+
+SELECT * FROM BILL
+
+
+
+CREATE TABLE EMPLOYEE
+(
+EmployeeId int IDENTITY(1,1) PRIMARY KEY,
+Employee_Name varchar(50) NOT NULL,
+CONSTRAINT Employee_Name CHECK (Employee_Name  not like '%[^A-Z ]%'  ),
+Employee_Address varchar(200)NOT NULL  ,
+Employee_Phone varchar(11)NOT NULL UNIQUE,
+CONSTRAINT chk_employeephone CHECK (Employee_Phone not like '%[^0-9]%') ,
+Order_No int  FOREIGN KEY REFERENCES ORDERS(Order_No),
+Salary float NOT NULL,
+)
+
+drop table EMPLOYEE
+
+
+
+SELECT * FROM EMPLOYEE
+
+
+
+	   
